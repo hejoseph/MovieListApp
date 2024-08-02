@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  movie-gold-v1:
+    image: movie-gold-v1
+    build: ./movie-gold-v1
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./movie-gold-v1:/app
+      - /app/node_modules
+    depends_on:
+      - movie-api
+
+  mongo-local:
+    image: mongo:latest
+    container_name: mongo-local
+    ports:
+      - "27017:27017"
+    volumes:
+      # - mongo-local-data:/data/db #for persistance
+      - ./mongo-init:/docker-entrypoint-initdb.d
+
+  movie-api:
+    image: movie-api:latest
+    build: ./movie-api
+    container_name: movie-api
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo-local
+
+# volumes:  #for persistance
+#   mongo-local-data:
