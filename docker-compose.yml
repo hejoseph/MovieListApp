@@ -2,15 +2,17 @@ version: '3.8'
 
 services:
   movie-list-front:
-    image: movie-list-front
-    build: ./movie-list-front
+    container_name: movie-list-front
+    build:
+      context: ./movie-list-front
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: development
-    volumes:
-      - ./movie-list-front:/app
-      - /app/node_modules
+      - "3000:80"
+    # environment:
+    #   NODE_ENV: development
+    # volumes:
+    #   - ./movie-list-front:/app
+    #   - /app/node_modules
     depends_on:
       - movie-api
 
