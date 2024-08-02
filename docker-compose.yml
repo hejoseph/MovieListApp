@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  movie-list-front:
+    image: movie-list-front
+    build: ./movie-list-front
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./movie-list-front:/app
+      - /app/node_modules
+    depends_on:
+      - movie-api
+
   mongo-local:
     image: mongo:latest
     container_name: mongo-local
