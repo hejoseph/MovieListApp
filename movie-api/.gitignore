@@ -34,7 +34,3 @@ build/
 
 ### Environment ###
 .env
-
-*.jar
-
-*.mvn
